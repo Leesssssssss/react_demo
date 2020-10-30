@@ -34,6 +34,15 @@ const User = mongoose.model('user', new mongoose.Schema({
 //   }
 // })
 
+// 更新
+// User.update({ user: '美柔' }, { '$set': { age: 20 } }, (err, doc) => {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     console.log(doc);
+//   }
+// })
+
 
 const app = express()
 
@@ -42,7 +51,12 @@ app.get('/', (req, res) => {
 })
 
 app.get('/data', (req, res) => {
-  User.find({}, (err, doc) => {
+  // User.find({}, (err, doc) => {
+  //   res.json(doc)
+  // })
+
+  // 查到一条就返回，返回一条数据，不是一个数组
+  User.findOne({ user: '美柔' }, (err, doc) => {
     res.json(doc)
   })
 })
