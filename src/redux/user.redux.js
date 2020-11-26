@@ -1,21 +1,24 @@
 import axios from "axios";
+import { getRedirectPath } from '../utils';
 
-const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+const AUTH_SUCCESS = 'AUTH_SUCCESS';
 const ERROR_MSG = 'ERROR_MSG';
+const LOAD_DATA = 'LOAD_DATA';
 
 const initState = {
-  isAuth: '',
+  redirectTo: '',
   msg: '',
   user: '',
-  password: '',
   type: ''
 };
 
 // reducer
 export function user (state = initState, action) {
   switch (action.type) {
-    case REGISTER_SUCCESS:
-      return { ...state, msg: '', isAuth: true, ...action.payload };
+    case AUTH_SUCCESS:
+      return { ...state, msg: '', redirectTo: getRedirectPath(action.payload), ...action.payload };
+    case LOAD_DATA:
+      return { ...state, ...action.payload };
     case ERROR_MSG:
       return { ...state, msg: action.msg, isAuth: false };
     default:
@@ -23,14 +26,21 @@ export function user (state = initState, action) {
   }
 }
 
-function registerSuccess (data) {
-  return { type: REGISTER_SUCCESS, payload: data };
+function authSuccess (obj) {
+  // 过滤掉password
+  const { password, ...data } = obj;
+  return { type: AUTH_SUCCESS, payload: data };
 }
 
 function errorMsg (msg) {
   return { msg, type: ERROR_MSG };
 }
 
+export function loadData (user_info) {
+  return { type: LOAD_DATA, payload: user_info };
+}
+
+// 注册
 export function register ({ user, password, repeatPassword, type }) {
   if (!user || !password || !type) {
     return errorMsg('请输入用户名和密码');
@@ -41,10 +51,39 @@ export function register ({ user, password, repeatPassword, type }) {
   return dispatch => {
     axios.post('/user/register', { user, password, type }).then(res => {
       if (res.status === 200 && res.data.code === 0) {
-        dispatch(registerSuccess({ user, password, type }));
+        dispatch(authSuccess({ user, password, type }));
       } else {
         dispatch(errorMsg(res.data.msg));
       }
     });
   };
 };
+
+// 登录
+export function login ({ user, password }) {
+  if (!user || !password) {
+    return errorMsg('请输入用户名和密码');
+  }
+  return dispatch => {
+    axios.post('/user/login', { user, password }).then(res => {
+      if (res.status === 200 && res.data.code === 0) {
+        dispatch(authSuccess(res.data.data));
+      } else {
+        dispatch(errorMsg(res.data.msg));
+      }
+    });
+  };
+};
+
+// 完善信息
+export function update (data) {
+  return dispatch => {
+    axios.post('/user/update', data).then(res => {
+      if (res.status === 200 && res.data.code === 0) {
+        dispatch(authSuccess(res.data.data));
+      } else {
+        dispatch(errorMsg(res.data.msg));
+      }
+    });
+  };
+}

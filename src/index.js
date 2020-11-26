@@ -5,12 +5,16 @@ import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Login from './container/login/login';
 import Register from './container/register/register';
+import BossInfo from './container/bossinfo/bossinfo';
+import GeniusInfo from './container/geniusinfo/geniusinfo';
+
 import reducers from './reducer';
 import AuthRoute from './component/authroute/authroute';
+import Dashboard from './component/dashboard/dashboard';
 import './config';
 
 const reduxDevtools = window.devToolsExtension ? window.devToolsExtension() : () => { };
@@ -24,8 +28,13 @@ ReactDOM.render(
     <BrowserRouter>
       <div>
         <AuthRoute></AuthRoute>
-        <Route path='/login' component={ Login }></Route>
-        <Route path='/register' component={ Register }></Route>
+        <Switch>
+          <Route path='/login' component={ Login }></Route>
+          <Route path='/register' component={ Register }></Route>
+          <Route path='/bossinfo' component={ BossInfo }></Route>
+          <Route path='/geniusinfo' component={ GeniusInfo }></Route>
+          <Route component={ Dashboard }></Route>
+        </Switch>
       </div>
       {/* <Switch>
         <Route path='/login' exact component={ Auth }></Route>
