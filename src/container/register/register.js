@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import Logo from '../../component/logo/logo';
+import imoocForm from '../../component/imooc-form/imooc-form';
 import { List, InputItem, Radio, WingBlank, WhiteSpace, Button } from 'antd-mobile';
 import { connect } from 'react-redux';
 import { register } from '../../redux/user.redux';
@@ -9,19 +10,16 @@ import { register } from '../../redux/user.redux';
   state => state.user,
   { register }
 )
-
+@imoocForm
 class Register extends React.Component {
   constructor(props) {
     super(props);
     this.register = this.register.bind(this);
     this.login = this.login.bind(this);
+  }
 
-    this.state = {
-      user: '',
-      password: '',
-      repeatPassword: '',
-      type: 'genius'  // genius牛人   boss招聘者
-    };
+  componentDidMount () {
+    this.props.handleChange('type', 'genius');
   }
 
   login () {
@@ -29,13 +27,7 @@ class Register extends React.Component {
   }
 
   register () {
-    this.props.register(this.state);
-  }
-
-  handleChange (key, val) {
-    this.setState({
-      [key]: val
-    });
+    this.props.register(this.props.state);
   }
 
   render () {
@@ -45,15 +37,15 @@ class Register extends React.Component {
       <Logo></Logo>
       <h2 style={ { textAlign: 'center' } }>注册</h2>
       <WingBlank>
-        <InputItem onChange={ v => { this.handleChange('user', v); } }>用户名</InputItem>
+        <InputItem onChange={ v => { this.props.handleChange('user', v); } }>用户名</InputItem>
         <WhiteSpace />
-        <InputItem onChange={ v => { this.handleChange('password', v); } } type='password'>密码</InputItem>
+        <InputItem onChange={ v => { this.props.handleChange('password', v); } } type='password'>密码</InputItem>
         <WhiteSpace />
-        <InputItem onChange={ v => { this.handleChange('repeatPassword', v); } } type='password'>确认密码</InputItem>
+        <InputItem onChange={ v => { this.props.handleChange('repeatPassword', v); } } type='password'>确认密码</InputItem>
         <WhiteSpace />
         <List>
-          <RadioItem checked={ this.state.type === 'genius' } onChange={ () => { this.handleChange('type', 'genius'); } }>牛人</RadioItem>
-          <RadioItem checked={ this.state.type === 'boss' } onChange={ () => { this.handleChange('type', 'boss'); } }>BOSS</RadioItem>
+          <RadioItem checked={ this.props.state.type === 'genius' } onChange={ () => { this.props.handleChange('type', 'genius'); } }>牛人</RadioItem>
+          <RadioItem checked={ this.props.state.type === 'boss' } onChange={ () => { this.props.handleChange('type', 'boss'); } }>BOSS</RadioItem>
         </List>
         { this.props.msg ? <p className='error-msg'>{ this.props.msg }</p> : null }
         <WhiteSpace />

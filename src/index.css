@@ -48,3 +48,35 @@ code {
 .marginBottom10 {
   margin-bottom: 10px;
 }
+
+.am-tab-bar {
+  height: auto !important;
+}
+
+.chat-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+#chat-page .msg-box {
+  height: 40px;
+  margin: 20px;
+}
+
+#chat-page .recv-msg {
+  max-width: 50%;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#chat-page .send-msg {
+  max-width: 50%;
+  background-color: #108ee9;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  float: right;
+}

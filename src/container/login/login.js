@@ -1,51 +1,63 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import Logo from '../../component/logo/logo';
+import imoocForm from '../../component/imooc-form/imooc-form';
 import { InputItem, WingBlank, WhiteSpace, Button } from 'antd-mobile';
 import { connect } from 'react-redux';
 import { login } from '../../redux/user.redux';
+
+// 属性代理
+// function WrapperHello (Comp) {
+//   class WrapComp extends React.Component {
+//     render () {
+//       return (
+//         <div>
+//           <p>高阶组件</p>
+//           <Comp { ...this.props }></Comp>
+//         </div>
+//       );
+//     }
+//   }
+//   return WrapComp;
+// }
+// @WrapperHello
+// class Hello extends React.Component {
+//   render () {
+//     return <h1>Hello</h1>;
+//   }
+// }
 
 @connect(
   state => state.user,
   { login }
 )
-
+@imoocForm
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.login = this.login.bind(this);
     this.register = this.register.bind(this);
-
-    this.state = {
-      user: '',
-      password: ''
-    };
   }
 
   login () {
-    this.props.login(this.state);
+    this.props.login(this.props.state);
   }
 
   register () {
     this.props.history.push('/register');
   }
 
-  handleChange (key, val) {
-    this.setState({
-      [key]: val
-    });
-  }
-
   render () {
     return (
       <div>
-        { this.props.redirectTo ? <Redirect to={ this.props.redirectTo }></Redirect> : null }
+        {/* <Hello></Hello> */ }
+        { this.props.redirectTo && this.props.redirectTo !== '/login' ? <Redirect to={ this.props.redirectTo }></Redirect> : null }
         <Logo></Logo>
         <h2 style={ { textAlign: 'center' } }>登录</h2>
         <WingBlank>
-          <InputItem onChange={ v => { this.handleChange('user', v); } }>用户</InputItem>
+          <InputItem onChange={ v => { this.props.handleChange('user', v); } }>用户</InputItem>
           <WhiteSpace />
-          <InputItem onChange={ v => { this.handleChange('password', v); } }>密码</InputItem>
+          <InputItem onChange={ v => { this.props.handleChange('password', v); } } type='password'>密码</InputItem>
           { this.props.msg ? <p className='error-msg'>{ this.props.msg }</p> : null }
           <WhiteSpace />
           <WhiteSpace />
