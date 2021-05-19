@@ -60,15 +60,35 @@ code {
   z-index: 2;
 }
 
-#chat-page .msg-box {
+#chat-page .msg-box-left {
   height: 40px;
   margin: 20px;
+  display: flex;
+}
+
+#chat-page .msg-box-right {
+  height: 40px;
+  margin: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#chat-page .revc-ava {
+  width: 40px;
+  margin-right: 10px;
+  border-radius: 5px;
 }
 
 #chat-page .recv-msg {
   max-width: 50%;
   background-color: #fff;
   padding: 10px;
+  border-radius: 5px;
+}
+
+#chat-page .send-ava {
+  width: 40px;
+  margin-left: 10px;
   border-radius: 5px;
 }
 
@@ -79,4 +99,18 @@ code {
   padding: 10px;
   border-radius: 5px;
   float: right;
+}
+
+#chat-page .am-grid-icon {
+  display: none;
+}
+
+#chat-page .am-grid-text {
+  margin-top: 0;
+  font-size: 16px;
+}
+
+#chat-page .send-btn{
+  display: flex;
+  align-items: center;
 }

@@ -19,7 +19,7 @@ class UserCard extends React.Component {
             (<div>
               <WhiteSpace></WhiteSpace>
               <Card key={ v._id } onClick={ () => this.handleClick(v) }>
-                <Card.Header title={ v.user } thumb={ require(`../imgs/${v.avatar}.png`) } thumbStyle={ { width: '40px' } } extra={ <span>{ v.title }</span> }></Card.Header>
+                <Card.Header title={ v.user } thumb={ require(`../imgs/${v.avatar}.png`) } thumbStyle={ { width: '40px', borderRadius: '5px' } } extra={ <span>{ v.title }</span> }></Card.Header>
                 <Card.Body>
                   { v.type === 'boss' ? <div className="marginBottom10">公司：{ v.company }</div> : null }
                   { v.type === 'boss' ? <div className="marginBottom10">薪资：{ v.money }</div> : null }

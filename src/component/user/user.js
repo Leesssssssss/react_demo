@@ -36,7 +36,7 @@ class User extends React.Component {
     const Brief = Item.Brief;
     return props.user ? (
       <div>
-        <Result img={ <img style={ { width: '50px' } } src={ require(`../imgs/${props.avatar}.png`) } alt=""></img> } title={ props.user } message={ props.type === 'boss' ? props.company : null }></Result>
+        <Result img={ <img style={ { width: '50px', borderRadius: '5px' } } src={ require(`../imgs/${props.avatar}.png`) } alt=""></img> } title={ props.user } message={ props.type === 'boss' ? props.company : null }></Result>
         <List renderHeader={ () => { '简介'; } }>
           <Item wrap>
             { props.title }
